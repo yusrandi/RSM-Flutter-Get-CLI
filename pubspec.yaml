@@ -1,0 +1,46 @@
+name: rsm_flutter_get_cli
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.16.2 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.1
+  lottie: 1.3.0
+  flutter_svg: 1.0.3
+  intl: 0.17.0
+  font_awesome_flutter: 10.1.0
+  flutter_qr_bar_scanner: ^3.0.2
+  flutter_barcode_scanner: ^2.0.0
+  qr_mobile_vision: ^3.0.1
+  mobile_scanner: ^1.0.0
+  qr_code_scanner: ^0.7.0
+  http: 0.13.4
+  flutter_staggered_grid_view: ^0.6.1
+  camera: 0.9.4+21
+  carousel_slider: ^4.1.1
+  uuid: 3.0.6
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^1.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
+    - assets/lotties/
+    - assets/icons/
+    - assets/images/
+  fonts: 
+    - family: Nunito
+      fonts: 
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+    - family: Muli
+      fonts: 
+        - asset: assets/fonts/muli/Muli-SemiBold.ttf
+  uses-material-design: true
+
