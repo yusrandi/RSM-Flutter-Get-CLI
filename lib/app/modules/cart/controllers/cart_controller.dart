@@ -12,6 +12,7 @@ class CartController extends GetxController {
   var cartItems = <Cart>[].obs;
   int get count => cartItems.length;
   var count2 = 0.0;
+  var qtys = "";
   double get totalPrice => cartItems.fold(
       0, (sum, item) => sum + int.parse(item.cabangProduct!.harga!) * item.qty);
 
@@ -80,5 +81,11 @@ class CartController extends GetxController {
     double totalamount = cartItems.fold(0,
         (sum, item) => sum + int.parse(item.cabangProduct!.harga!) * item.qty);
     count2 = totalamount;
+
+    String qtyss =
+        cartItems.fold("", (sum, item) => sum + "," + item.qty.toString());
+    qtys = qtyss;
   }
+
+  insertTrasaksi() {}
 }

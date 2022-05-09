@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:lottie/lottie.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 
+import '../../../cores/core_images.dart';
 import '../controllers/barcode_controller.dart';
 
 class BarcodeView extends GetView<BarcodeController> {
@@ -35,10 +39,20 @@ class BarcodeView extends GetView<BarcodeController> {
   }
 
   _tesQrCode2() {
-    return Center(
-        child: ElevatedButton(
-            onPressed: () => scanBarcodeNormal(),
-            child: Text('Start barcode scan')));
+    return GestureDetector(
+      onTap: () => scanBarcodeNormal(),
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset(CoreImages.qrJson),
+          Text(
+            'Tap For scan',
+            style: CoreStyles.uTitle.copyWith(color: CoreColor.gradient1),
+          ),
+        ],
+      )),
+    );
   }
 
   _tesQRCode1() {

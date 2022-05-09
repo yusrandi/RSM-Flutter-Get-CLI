@@ -1,8 +1,9 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AbsensiController extends GetxController {
-  final count = 0.obs;
+  RxInt count = 0.obs;
   late CameraController cameraController;
 
   @override
@@ -25,10 +26,11 @@ class AbsensiController extends GetxController {
   }
 
   void increment() => count.value++;
+  void setCount(int val) => count.value = val;
 
   Future<CameraController> initCamera() async {
     final cameras = await availableCameras();
-    cameraController = CameraController(cameras[1], ResolutionPreset.max);
+    cameraController = CameraController(cameras[1], ResolutionPreset.high);
     await cameraController.initialize();
 
     return cameraController;

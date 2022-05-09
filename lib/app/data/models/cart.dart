@@ -1,6 +1,10 @@
 // import 'package:equatable/equatable.dart';
 
+import 'dart:convert';
+
 import 'cabang-product.dart';
+
+String cartToJson(Cart data) => json.encode(data.toJson());
 
 class Cart {
   String? id;
@@ -29,4 +33,10 @@ class Cart {
   void decreaseDown() {
     qty--;
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "cabang-product": CabangProduct,
+        "qty": qty,
+      };
 }

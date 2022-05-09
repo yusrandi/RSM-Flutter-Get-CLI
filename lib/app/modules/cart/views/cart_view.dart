@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
+import 'package:rsm_flutter_get_cli/app/data/models/cart.dart';
 
 import '../../../cores/core_widgets.dart/cart_card.dart';
 import '../controllers/cart_controller.dart';
@@ -77,16 +80,27 @@ class CartView extends GetView<CartController> {
                       ),
                     ),
                     SizedBox(width: 30),
-                    Container(
-                      width: 150,
-                      decoration: BoxDecoration(
-                        gradient: CoreColor.bottomShadow,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Checkout',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        var qtys = [];
+                        controller.cartItems.forEach((element) {
+                          print(element.qty);
+                          qtys.add(element.qty);
+                        });
+
+                        print(qtys.join(","));
+                      },
+                      child: Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                          gradient: CoreColor.bottomShadow,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Checkout',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
                         ),
                       ),
                     )
