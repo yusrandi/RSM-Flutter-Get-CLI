@@ -16,7 +16,7 @@ class ItemProduct extends StatelessWidget {
       onTap: (() => Get.toNamed(Routes.DETAIL, arguments: cb)),
       child: Container(
         width: 150,
-        height: 270,
+        height: 290,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(15)),
         child: Column(

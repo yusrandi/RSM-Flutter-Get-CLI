@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 
 class CoreStyles {
   static TextStyle uTitle =

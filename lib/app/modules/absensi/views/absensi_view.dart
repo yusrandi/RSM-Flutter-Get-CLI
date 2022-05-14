@@ -1,11 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import '../../../cores/core_colors.dart';
 import '../../../cores/core_images.dart';
 import '../../../cores/core_styles.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/absensi_controller.dart';
 
 class AbsensiView extends GetView<AbsensiController> {
@@ -49,11 +51,39 @@ class AbsensiView extends GetView<AbsensiController> {
         if (!cameraController.value.isInitialized) {
           return Center(child: Text('Not Initialised'));
         }
+        final size = MediaQuery.of(context).size;
+        var scale = size.aspectRatio * cameraController.value.aspectRatio;
+        if (scale > 1) scale = 1 / scale;
         return Column(
           children: [
             Container(child: CameraPreview(cameraController)),
             GestureDetector(
-              onTap: () => c.setCount(0),
+              onTap: () async {
+                try {
+                  // Attempt to take a picture and get the file `image`
+                  // where it was saved.
+                  final image = await cameraController.takePicture();
+                  print(image.path);
+
+                  // If the picture was taken, display it on a new screen.
+                  // await Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DisplayPictureScreen(
+                  //       // Pass the automatically generated path to
+                  //       // the DisplayPictureScreen widget.
+                  //       imagePath: image.path,
+                  //     ),
+                  //   ),
+                  // );
+                  // mirror selfie picture
+
+                  await Get.toNamed(Routes.DISPLAY, arguments: image);
+                } catch (e) {
+                  // If an error occurs, log the error to the console.
+                  print(e);
+                }
+                c.setCount(0);
+              },
               child: Container(
                 width: 80.0,
                 height: 80.0,

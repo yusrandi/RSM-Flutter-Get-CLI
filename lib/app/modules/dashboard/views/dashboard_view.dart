@@ -179,7 +179,6 @@ class DashboardView extends GetView<DashboardController> {
                   color: Colors.black)),
           Container(
             margin: EdgeInsets.only(top: 8),
-            height: 280,
             child: FutureBuilder<List<CabangProduct>>(
                 future: c.getAllProductById(1),
                 builder: (context, snapshot) {
@@ -188,18 +187,29 @@ class DashboardView extends GetView<DashboardController> {
                         child: CircularProgressIndicator(
                             color: CoreColor.primary));
                   }
+
                   print(snapshot.data);
-                  return ListView.separated(
-                    // crossAxisCount is the number of columns
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      CabangProduct cb = snapshot.data![index];
-                      return ItemProduct(cb: cb);
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                      width: 10,
+                  if (snapshot.data!.isEmpty) {
+                    return Container(
+                      child: Center(
+                        child: Text('Produk Belum Tersedia'),
+                      ),
+                    );
+                  }
+                  return Container(
+                    height: 280,
+                    child: ListView.separated(
+                      // crossAxisCount is the number of columns
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        CabangProduct cb = snapshot.data![index];
+                        return ItemProduct(cb: cb);
+                      },
+                      separatorBuilder: (context, index) => SizedBox(
+                        width: 10,
+                      ),
                     ),
                   );
                 }),
@@ -223,6 +233,13 @@ class DashboardView extends GetView<DashboardController> {
                               color: CoreColor.primary));
                     }
 
+                    if (snapshot.data!.isEmpty) {
+                      return Container(
+                        child: Center(
+                          child: Text('Produk Belum Tersedia'),
+                        ),
+                      );
+                    }
                     print(snapshot.data);
                     return StaggeredGrid.count(
                       // crossAxisCount is the number of columns

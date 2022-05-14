@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
+import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
 import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../cores/core_colors.dart';
+import '../../../data/config/api.dart';
 import '../../../data/models/cabang-product.dart';
 import '../../../data/models/cart.dart';
 
@@ -87,5 +90,27 @@ class CartController extends GetxController {
     qtys = qtyss;
   }
 
-  insertTrasaksi() {}
+  Future<String> transaksiStore(
+      String amount, String cabang_produk_ids, String qtys) async {
+    var _response = await http.post(Uri.parse(Api().sale), body: {
+      "user_id": "1",
+      "amount": amount,
+      "qtys": qtys,
+      "cabang_produk_ids": cabang_produk_ids,
+    });
+
+    print(_response.body);
+
+    Get.snackbar("berhasil", "Transaksi Berhasil",
+        backgroundColor: CoreColor.whiteSoft, duration: Duration(seconds: 1));
+    Get.offAndToNamed(Routes.HOME);
+
+    cartItems.clear();
+    return _response.body;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 }

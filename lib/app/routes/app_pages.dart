@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import 'package:rsm_flutter_get_cli/app/modules/absensi/bindings/absensi_binding.dart';
 import 'package:rsm_flutter_get_cli/app/modules/absensi/views/absensi_view.dart';
+import 'package:rsm_flutter_get_cli/app/modules/absensi/views/display_picture.dart';
 import 'package:rsm_flutter_get_cli/app/modules/barcode/bindings/barcode_binding.dart';
 import 'package:rsm_flutter_get_cli/app/modules/barcode/views/barcode_view.dart';
 import 'package:rsm_flutter_get_cli/app/modules/cart/bindings/cart_binding.dart';
@@ -64,6 +65,11 @@ class AppPages {
       name: _Paths.SETTING,
       page: () => SettingView(),
       binding: SettingBinding(),
+    ),
+    GetPage(
+      name: _Paths.DISPLAY,
+      page: () => DisplayPicture(),
+      binding: AbsensiBinding(),
     ),
   ];
 }

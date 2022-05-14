@@ -1,8 +1,8 @@
 import 'dart:developer';
 
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
@@ -82,13 +82,10 @@ class CartView extends GetView<CartController> {
                     SizedBox(width: 30),
                     GestureDetector(
                       onTap: () {
-                        var qtys = [];
-                        controller.cartItems.forEach((element) {
-                          print(element.qty);
-                          qtys.add(element.qty);
-                        });
-
-                        print(qtys.join(","));
+                        if (controller.cartItems.isNotEmpty) {
+                          alertConfirm(context);
+                        }
+                        // EasyLoading.show(status: 'loading...');
                       },
                       child: Container(
                         width: 150,
@@ -110,5 +107,40 @@ class CartView extends GetView<CartController> {
         ],
       ),
     );
+  }
+
+  void alertConfirm(BuildContext context) async {
+    ArtDialogResponse response = await ArtSweetAlert.show(
+        barrierDismissible: false,
+        context: context,
+        artDialogArgs: ArtDialogArgs(
+            denyButtonText: "Cancel",
+            title: "Are you sure?",
+            text: "Mohon periksa kembali pesanan anda!",
+            confirmButtonText: "Yes, Checkout",
+            type: ArtSweetAlertType.warning));
+
+    // ignore: unnecessary_null_comparison
+    if (response == null) {
+      return;
+    }
+
+    if (response.isTapConfirmButton) {
+      var qtys = [];
+      var cabangProductIds = [];
+      controller.cartItems.forEach((element) {
+        print(element.qty);
+        qtys.add(element.qty);
+        cabangProductIds.add(element.cabangProduct!.id!);
+      });
+
+      print(qtys.join(","));
+      print(cabangProductIds.join(","));
+      print(controller.count2);
+
+      controller.transaksiStore(controller.count2.toString(),
+          cabangProductIds.join(","), qtys.join(","));
+      return;
+    }
   }
 }

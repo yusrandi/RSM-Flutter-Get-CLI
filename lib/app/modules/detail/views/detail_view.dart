@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 import 'package:get/get.dart';
-import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/data/config/api.dart';
 import 'package:rsm_flutter_get_cli/app/data/models/cabang-product.dart';
 import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
