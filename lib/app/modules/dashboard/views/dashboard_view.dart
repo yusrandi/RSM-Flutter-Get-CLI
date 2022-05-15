@@ -9,6 +9,7 @@ import 'package:rsm_flutter_get_cli/app/modules/cart/controllers/cart_controller
 import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
 
 import '../../../cores/core_colors.dart';
+import '../../../cores/loaders/item_product_skeleton.dart';
 import '../../../data/models/cabang-product.dart';
 import '../../../data/models/user.dart';
 import '../../setting/controllers/setting_controller.dart';
@@ -183,11 +184,8 @@ class DashboardView extends GetView<DashboardController> {
                 future: c.getAllProductById(1),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child: CircularProgressIndicator(
-                            color: CoreColor.primary));
+                    return Container(height: 290, child: listTerlakuLoading());
                   }
-
                   print(snapshot.data);
                   if (snapshot.data!.isEmpty) {
                     return Container(
@@ -228,9 +226,7 @@ class DashboardView extends GetView<DashboardController> {
                   future: c.getAllProductById(1),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                          child: CircularProgressIndicator(
-                              color: CoreColor.primary));
+                      return listSemuaProdukLoading();
                     }
 
                     if (snapshot.data!.isEmpty) {
@@ -280,6 +276,28 @@ class DashboardView extends GetView<DashboardController> {
           SizedBox(height: 50),
         ],
       ),
+    );
+  }
+
+  ListView listTerlakuLoading() {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: 10,
+      itemBuilder: (context, index) => ItemProductSkeleton(),
+      separatorBuilder: (context, index) => const SizedBox(width: 16),
+    );
+  }
+
+  listSemuaProdukLoading() {
+    return StaggeredGrid.count(
+      // crossAxisCount is the number of columns
+      crossAxisCount: 2,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      // This creates two columns with two items in each column
+      children: List.generate(10, (index) {
+        return ItemProductSkeleton();
+      }),
     );
   }
 }

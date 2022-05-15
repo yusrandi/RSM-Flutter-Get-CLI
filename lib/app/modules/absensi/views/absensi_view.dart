@@ -53,45 +53,59 @@ class AbsensiView extends GetView<AbsensiController> {
         }
         final size = MediaQuery.of(context).size;
         var scale = size.aspectRatio * cameraController.value.aspectRatio;
-        if (scale > 1) scale = 1 / scale;
+        scale = 1 / scale;
+
         return Column(
           children: [
-            Container(child: CameraPreview(cameraController)),
-            GestureDetector(
-              onTap: () async {
-                try {
-                  // Attempt to take a picture and get the file `image`
-                  // where it was saved.
-                  final image = await cameraController.takePicture();
-                  print(image.path);
-
-                  // If the picture was taken, display it on a new screen.
-                  // await Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DisplayPictureScreen(
-                  //       // Pass the automatically generated path to
-                  //       // the DisplayPictureScreen widget.
-                  //       imagePath: image.path,
-                  //     ),
-                  //   ),
-                  // );
-                  // mirror selfie picture
-
-                  await Get.toNamed(Routes.DISPLAY, arguments: image);
-                } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                }
-                c.setCount(0);
-              },
-              child: Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: new BoxDecoration(
-                  color: CoreColor.primary,
-                  shape: BoxShape.circle,
+            Container(
+                width: size.width,
+                child: Transform.scale(
+                  scale: scale,
+                  alignment: Alignment.topCenter,
+                  child: CameraPreview(cameraController),
+                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: (() => c.setCount(0)),
+                  child: Icon(
+                    Icons.cancel_sharp,
+                    color: Colors.white,
+                    size: 40,
+                  ),
                 ),
-              ),
+                SizedBox(width: 16),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      // Attempt to take a picture and get the file `image`
+                      // where it was saved.
+                      final image = await cameraController.takePicture();
+                      print(image.path);
+
+                      await Get.toNamed(Routes.DISPLAY, arguments: image);
+                    } catch (e) {
+                      // If an error occurs, log the error to the console.
+                      print(e);
+                    }
+                    c.setCount(0);
+                  },
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: new BoxDecoration(
+                      color: CoreColor.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.camera,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         );

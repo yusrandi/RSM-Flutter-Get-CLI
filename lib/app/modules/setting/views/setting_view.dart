@@ -14,56 +14,60 @@ class SettingView extends GetView<SettingController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<User>(
-        future: userController.getUser("1"),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: CircularProgressIndicator(color: CoreColor.primary));
-          }
-          User u = snapshot.data!;
-          print(snapshot.data);
+      child: _body(),
+    );
+  }
+
+  FutureBuilder<User> _body() {
+    return FutureBuilder<User>(
+      future: userController.getUser("1"),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    width: 190.0,
-                    height: 190.0,
-                    decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                            fit: BoxFit.fill,
-                            image: new NetworkImage(
-                                Api.imageUserURL + '/' + u.foto!)))),
-                Text(
-                  u.name!,
-                  style: CoreStyles.uTitle,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      u.phone!,
-                      style: CoreStyles.uTitle.copyWith(fontSize: 14),
-                    ),
-                    Text(
-                      "|",
-                      style: CoreStyles.uTitle.copyWith(fontSize: 16),
-                    ),
-                    Text(
-                      u.email!,
-                      style: CoreStyles.uTitle.copyWith(fontSize: 14),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+              child: CircularProgressIndicator(color: CoreColor.primary));
+        }
+        User u = snapshot.data!;
+        print(snapshot.data);
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                  width: 190.0,
+                  height: 190.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                          fit: BoxFit.fill,
+                          image: new NetworkImage(
+                              Api.imageUserURL + '/' + u.foto!)))),
+              Text(
+                u.name!,
+                style: CoreStyles.uTitle,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    u.phone!,
+                    style: CoreStyles.uTitle.copyWith(fontSize: 14),
+                  ),
+                  Text(
+                    "|",
+                    style: CoreStyles.uTitle.copyWith(fontSize: 16),
+                  ),
+                  Text(
+                    u.email!,
+                    style: CoreStyles.uTitle.copyWith(fontSize: 14),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

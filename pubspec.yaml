@@ -12,11 +12,7 @@ dependencies:
   flutter_svg: 1.0.3
   intl: 0.17.0
   font_awesome_flutter: 10.1.0
-  flutter_qr_bar_scanner: ^3.0.2
   flutter_barcode_scanner: ^2.0.0
-  qr_mobile_vision: ^3.0.1
-  mobile_scanner: ^1.0.0
-  qr_code_scanner: ^0.7.0
   http: 0.13.4
   flutter_staggered_grid_view: ^0.6.1
   camera: 0.9.4+21

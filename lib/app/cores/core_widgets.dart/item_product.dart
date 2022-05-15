@@ -12,10 +12,11 @@ class ItemProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: (() => Get.toNamed(Routes.DETAIL, arguments: cb)),
       child: Container(
-        width: 150,
+        width: size.width * 0.4,
         height: 290,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(15)),

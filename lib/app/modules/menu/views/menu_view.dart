@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_widgets.dart/item_product.dart';
 
+import '../../../cores/loaders/item_product_skeleton.dart';
 import '../../../data/models/cabang-product.dart';
 import '../controllers/menu_controller.dart';
 
@@ -64,12 +65,7 @@ class MenuView extends GetView<MenuController> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 8,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
                 child: Obx(
               () => StaggeredGrid.count(
@@ -128,6 +124,19 @@ class MenuView extends GetView<MenuController> {
           ),
         ],
       ),
+    );
+  }
+
+  listSemuaProdukLoading() {
+    return StaggeredGrid.count(
+      // crossAxisCount is the number of columns
+      crossAxisCount: 2,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      // This creates two columns with two items in each column
+      children: List.generate(10, (index) {
+        return ItemProductSkeleton();
+      }),
     );
   }
 }
