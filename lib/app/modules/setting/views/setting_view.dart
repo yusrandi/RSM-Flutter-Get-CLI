@@ -73,10 +73,10 @@ class SettingView extends GetView<SettingController> {
                 },
                 child: Container(
                   margin: EdgeInsets.all(16),
-                  height: 60,
+                  height: 50,
                   decoration: BoxDecoration(
                       color: CoreColor.primary,
-                      borderRadius: BorderRadius.circular(20)),
+                      borderRadius: BorderRadius.circular(8)),
                   child: Center(
                     child: Text(
                       "Logout",

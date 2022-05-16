@@ -31,7 +31,7 @@ class SplashView extends GetView<SplashController> {
         future: initializeSettings(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return _body();
+            return _body(context);
           } else {
             if (snapshot.hasError)
               return errorView(snapshot);
@@ -47,7 +47,7 @@ class SplashView extends GetView<SplashController> {
     return Scaffold(body: Center(child: Text('Error: ${snapshot.error}')));
   }
 
-  Stack _body() {
+  Stack _body(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -60,7 +60,8 @@ class SplashView extends GetView<SplashController> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: Lottie.asset(CoreImages.motorJson),
+                child: Lottie.asset(CoreImages.motorJson,
+                    height: MediaQuery.of(context).size.height / 2),
               ),
               Text(
                 "${CoreStrings.appName}",

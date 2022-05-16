@@ -88,45 +88,6 @@ class MenuView extends GetView<MenuController> {
     );
   }
 
-  tesFilter() {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          TextField(
-            onChanged: (value) => controller.filterPlayer(value),
-            decoration: const InputDecoration(
-              labelText: 'Search',
-              suffixIcon: Icon(Icons.search),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Obx(() => Text(controller.dataList.value.length.toString())),
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                itemCount: controller.foundPlayers.value.length,
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(
-                    controller.foundPlayers.value[index]['name'],
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle:
-                      Text(controller.foundPlayers.value[index]['country']),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   listSemuaProdukLoading() {
     return StaggeredGrid.count(
       // crossAxisCount is the number of columns

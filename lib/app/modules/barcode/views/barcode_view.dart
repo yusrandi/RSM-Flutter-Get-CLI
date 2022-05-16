@@ -11,6 +11,7 @@ import '../controllers/barcode_controller.dart';
 
 class BarcodeView extends GetView<BarcodeController> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  BarcodeController _barcodeController = Get.put(BarcodeController());
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class BarcodeView extends GetView<BarcodeController> {
 
   _tesQrCode2() {
     return GestureDetector(
-      onTap: () => scanBarcodeNormal(),
+      onTap: () => _barcodeController.scanBarcodeNormal(),
       child: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
