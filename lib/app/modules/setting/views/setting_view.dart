@@ -4,12 +4,15 @@ import 'package:get/get.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/data/config/api.dart';
 import 'package:rsm_flutter_get_cli/app/data/models/user.dart';
+import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/auth_controller.dart';
 
 import '../../../cores/core_colors.dart';
+import '../../auth/controllers/authentication_manager.dart';
 import '../controllers/setting_controller.dart';
 
 class SettingView extends GetView<SettingController> {
   final userController = Get.put(SettingController());
+  AuthenticationManager _authManager = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +66,24 @@ class SettingView extends GetView<SettingController> {
                     style: CoreStyles.uTitle.copyWith(fontSize: 14),
                   ),
                 ],
+              ),
+              GestureDetector(
+                onTap: () {
+                  _authManager.logOut();
+                },
+                child: Container(
+                  margin: EdgeInsets.all(16),
+                  height: 60,
+                  decoration: BoxDecoration(
+                      color: CoreColor.primary,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Center(
+                    child: Text(
+                      "Logout",
+                      style: CoreStyles.uTitle.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

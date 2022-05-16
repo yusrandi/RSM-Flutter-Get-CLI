@@ -10,11 +10,12 @@ void main() async {
   // var store = transaksiStore("2000", "1,2", "2,2");
   // print(store.toString());
 
-  Uri url = Uri.parse(Api().getUser + "/1");
-  print(url);
-  var res = await http.get(url);
-  User data = User.fromJson(json.decode(res.body)['data']);
-  print(data.name);
+  var _response = await http.post(Uri.parse(Api().loginUser), body: {
+    "phone": "00",
+    "password": "876543211",
+  });
+
+  print(_response.body);
 }
 
 Future<String> transaksiStore(
@@ -31,7 +32,7 @@ Future<String> transaksiStore(
 }
 
 Future<String> getUser() async {
-  Uri url = Uri.parse(Api().getUser + '/1');
+  Uri url = Uri.parse(Api().getUser + '/login');
   print(url);
   var res = await http.get(url);
   User data = User.fromJson(json.decode(res.body)['data']);

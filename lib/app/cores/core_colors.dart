@@ -10,6 +10,7 @@ class CoreColor {
   static Color gradient1 = Color(0xFFDC2E35);
   static Color gradient2 = Color(0xFFF65537);
   static Color greyColor2 = Color(0xFFE5E5E5);
+  static Color kHintTextColor = Color(0xFFBB9B9B9);
 
   static LinearGradient bottomShadow = LinearGradient(
       colors: [gradient1, gradient2],

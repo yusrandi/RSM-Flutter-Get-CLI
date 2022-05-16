@@ -1,29 +1,33 @@
 import 'package:get/get.dart';
 
-import 'package:rsm_flutter_get_cli/app/modules/absensi/bindings/absensi_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/absensi/views/absensi_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/absensi/views/display_picture.dart';
-import 'package:rsm_flutter_get_cli/app/modules/barcode/bindings/barcode_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/barcode/views/barcode_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/cart/bindings/cart_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/cart/views/cart_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/dashboard/bindings/dashboard_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/dashboard/views/dashboard_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/detail/bindings/detail_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/detail/views/detail_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/home/bindings/home_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/home/views/home_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/menu/bindings/menu_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/menu/views/menu_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/setting/bindings/setting_binding.dart';
-import 'package:rsm_flutter_get_cli/app/modules/setting/views/setting_view.dart';
+import '../modules/absensi/bindings/absensi_binding.dart';
+import '../modules/absensi/views/absensi_view.dart';
+import '../modules/absensi/views/display_picture.dart';
+import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/views/auth_view.dart';
+import '../modules/barcode/bindings/barcode_binding.dart';
+import '../modules/barcode/views/barcode_view.dart';
+import '../modules/cart/bindings/cart_binding.dart';
+import '../modules/cart/views/cart_view.dart';
+import '../modules/dashboard/bindings/dashboard_binding.dart';
+import '../modules/dashboard/views/dashboard_view.dart';
+import '../modules/detail/bindings/detail_binding.dart';
+import '../modules/detail/views/detail_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/menu/bindings/menu_binding.dart';
+import '../modules/menu/views/menu_view.dart';
+import '../modules/setting/bindings/setting_binding.dart';
+import '../modules/setting/views/setting_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/views/splash_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -70,6 +74,16 @@ class AppPages {
       name: _Paths.DISPLAY,
       page: () => DisplayPicture(),
       binding: AbsensiBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => SplashView(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.AUTH,
+      page: () => AuthView(),
+      binding: AuthBinding(),
     ),
   ];
 }

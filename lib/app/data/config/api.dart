@@ -15,6 +15,7 @@ class Api {
   String getKabupatens = "$baseURL/kabupaten";
   String getCabangProducts = "$baseURL/cabang-product";
   String getUser = "$baseURL/user";
+  String loginUser = "$baseURL/user/login";
   String sale = "$baseURL/sale";
   String absen = "$baseURL/absen";
 }
