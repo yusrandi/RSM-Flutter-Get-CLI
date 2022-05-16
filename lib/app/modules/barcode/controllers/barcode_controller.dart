@@ -43,10 +43,12 @@ class BarcodeController extends GetxController {
 
   filterProduk(String keyword) {
     print("Keyword $keyword");
-    CabangProduct cabangProduct = dataList.value
-        .singleWhere((element) => element.product!.productBarcode == keyword);
+    try {
+      CabangProduct cabangProduct = dataList.value
+          .singleWhere((element) => element.product!.productBarcode == keyword);
 
-    print("filterProduk $cabangProduct");
-    Get.toNamed(Routes.DETAIL, arguments: cabangProduct);
+      print("filterProduk $cabangProduct");
+      Get.toNamed(Routes.DETAIL, arguments: cabangProduct);
+    } catch (e) {}
   }
 }
