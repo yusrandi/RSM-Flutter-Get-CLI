@@ -14,6 +14,7 @@ abstract class Routes {
   static const CART = _Paths.CART;
   static const SETTING = _Paths.SETTING;
   static const DISPLAY = _Paths.DISPLAY;
+  static const CAMERA = _Paths.CAMERA;
   static const SPLASH = _Paths.SPLASH;
   static const AUTH = _Paths.AUTH;
 }
@@ -29,6 +30,7 @@ abstract class _Paths {
   static const CART = '/cart';
   static const SETTING = '/setting';
   static const DISPLAY = '/display';
+  static const CAMERA = '/camera';
   static const SPLASH = '/splash';
   static const AUTH = '/auth';
 }

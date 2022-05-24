@@ -3,6 +3,7 @@ import 'package:rsm_flutter_get_cli/app/data/config/api.dart';
 import 'dart:convert';
 
 import 'package:rsm_flutter_get_cli/app/data/models/user.dart';
+import 'package:rsm_flutter_get_cli/app/data/services/dashboard_services.dart';
 
 void main() async {
   print('halooo');
@@ -10,12 +11,9 @@ void main() async {
   // var store = transaksiStore("2000", "1,2", "2,2");
   // print(store.toString());
 
-  var _response = await http.post(Uri.parse(Api().loginUser), body: {
-    "phone": "00",
-    "password": "876543211",
-  });
+  var _response = await DashboardService().fetchDashboardReport(1);
 
-  print(_response.body);
+  print(_response);
 }
 
 Future<String> transaksiStore(

@@ -4,10 +4,9 @@ import 'dart:ui';
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
+import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/authentication_manager.dart';
 
 import '../../../cores/core_colors.dart';
 import '../controllers/absensi_controller.dart';
@@ -15,6 +14,7 @@ import '../controllers/absensi_controller.dart';
 class DisplayPicture extends GetView<AbsensiController> {
   AbsensiController c = Get.find();
   final _resKeterangan = new TextEditingController();
+  final AuthenticationManager authenticationManager = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,8 @@ class DisplayPicture extends GetView<AbsensiController> {
             print(status);
             print(keterangan);
             c.status.value = Status.running;
-            c.absenStore(File(image.path), status, keterangan, "1");
+            c.absenStore(File(image.path), status, keterangan,
+                authenticationManager.getToken()!);
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16),
@@ -150,20 +151,6 @@ class DisplayPicture extends GetView<AbsensiController> {
         ),
       ),
     );
-  }
-
-  FutureBuilder<String> store(XFile image) {
-    return FutureBuilder<String>(
-        future: controller.absenStore(
-            File(image.path), "status", "keterangan", "1"),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: CircularProgressIndicator(color: CoreColor.primary));
-          }
-          print(snapshot.data);
-          return Text(snapshot.data!);
-        });
   }
 
   void alertConfirm(BuildContext context) async {

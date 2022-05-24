@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:rsm_flutter_get_cli/app/modules/auth/views/auth_view.dart';
 
 import '../../auth/controllers/authentication_manager.dart';

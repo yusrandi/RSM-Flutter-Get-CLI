@@ -3,8 +3,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_widgets.dart/item_product.dart';
+import 'package:rsm_flutter_get_cli/app/data/models/dashboard_model.dart';
 import 'package:rsm_flutter_get_cli/app/modules/cart/controllers/cart_controller.dart';
 import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
 
@@ -12,6 +14,7 @@ import '../../../cores/core_colors.dart';
 import '../../../cores/loaders/item_product_skeleton.dart';
 import '../../../data/models/cabang-product.dart';
 import '../../../data/models/user.dart';
+import '../../auth/controllers/authentication_manager.dart';
 import '../../setting/controllers/setting_controller.dart';
 import '../controllers/dashboard_controller.dart';
 
@@ -22,27 +25,18 @@ class DashboardView extends GetView<DashboardController> {
   final cartController = Get.put(CartController());
   final userController = Get.put(SettingController());
 
-  final kategoris = [
-    'Sticker Sticker',
-    'Sadel',
-    'Plat',
-    'Jasa',
-    'Baju',
-    'Sticker Sticker',
-    'Sadel',
-    'Plat',
-    'Jasa',
-    'Baju'
-  ];
+  final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
+  final AuthenticationManager _authManager = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(), child: layout2()),
+          physics: BouncingScrollPhysics(), child: layout2(context)),
     );
   }
 
-  layout2() {
+  layout2(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -53,7 +47,7 @@ class DashboardView extends GetView<DashboardController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FutureBuilder<User>(
-                future: userController.getUser("1"),
+                future: userController.getUser(_authManager.getToken()!),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Text("...",
@@ -113,63 +107,39 @@ class DashboardView extends GetView<DashboardController> {
             ],
           ),
           SizedBox(height: 16),
-          Container(
-            height: 50,
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            decoration: BoxDecoration(
-                color: CoreColor.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(16)),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Icon(Icons.search, color: Colors.white),
-                ),
-                Expanded(
-                    child: Container(
-                  child: Text(
-                    'What are you looking for ?',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                )),
-              ],
-            ),
-          ),
-          SizedBox(height: 16),
-          Container(
-            height: 40,
-            child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemCount: kategoris.length,
-                itemBuilder: (context, index) {
-                  return Obx(
-                    () {
-                      return GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          margin: EdgeInsets.only(left: 8),
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: c.count.value == index
-                                  ? Colors.red
-                                  : Colors.white),
-                          child: Center(
-                            child: Text(
-                              '${kategoris[index]}',
-                              style: TextStyle(
-                                  color: c.count.value == index
-                                      ? Colors.white
-                                      : Colors.black),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }),
-          ),
+          FutureBuilder<DashboardModel>(
+              future: c.fetchReport(_authManager.getToken()!),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                print(snapshot.data);
+
+                DashboardModel model = snapshot.data!;
+
+                return Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white),
+                  child: IntrinsicHeight(
+                      child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          userKinerja(model),
+                          SizedBox(height: 8),
+                          userQty(model),
+                        ],
+                      ),
+                      VerticalDivider(),
+                      cabangTotal(model),
+                    ],
+                  )),
+                );
+              }),
           SizedBox(height: 16),
           SizedBox(height: 16),
           Text("List Produk Terlaku",
@@ -181,7 +151,8 @@ class DashboardView extends GetView<DashboardController> {
           Container(
             margin: EdgeInsets.only(top: 8),
             child: FutureBuilder<List<CabangProduct>>(
-                future: c.getAllProductById(1),
+                future:
+                    c.getAllProductById(int.parse(_authManager.getToken()!)),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container(height: 290, child: listTerlakuLoading());
@@ -274,6 +245,52 @@ class DashboardView extends GetView<DashboardController> {
                     );
                   })),
           SizedBox(height: 50),
+        ],
+      ),
+    );
+  }
+
+  RichText cabangTotal(DashboardModel model) {
+    return RichText(
+      text: TextSpan(
+        text: formatCurrency.format(model.cabangTotal),
+        style:
+            CoreStyles.uTitle.copyWith(fontSize: 16, color: CoreColor.primary),
+        children: <TextSpan>[
+          TextSpan(
+              text: '\nTotal Penjualan Cabang',
+              style: CoreStyles.uTitle
+                  .copyWith(fontSize: 10, color: CoreColor.kTextColor)),
+        ],
+      ),
+    );
+  }
+
+  RichText userQty(DashboardModel model) {
+    return RichText(
+      text: TextSpan(
+        text: model.userQty.toString(),
+        style: CoreStyles.uTitle.copyWith(fontSize: 16),
+        children: <TextSpan>[
+          TextSpan(
+              text: '\nJumlah Barang Terjual',
+              style: CoreStyles.uTitle
+                  .copyWith(fontSize: 10, color: CoreColor.kTextColor)),
+        ],
+      ),
+    );
+  }
+
+  RichText userKinerja(DashboardModel model) {
+    return RichText(
+      text: TextSpan(
+        text: formatCurrency.format(model.userTotal),
+        style: CoreStyles.uTitle.copyWith(fontSize: 16),
+        children: <TextSpan>[
+          TextSpan(
+              text: '\nTotal Kinerja',
+              style: CoreStyles.uTitle
+                  .copyWith(fontSize: 10, color: CoreColor.kTextColor)),
         ],
       ),
     );

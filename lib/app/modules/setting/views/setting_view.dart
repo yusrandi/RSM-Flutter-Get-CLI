@@ -23,7 +23,7 @@ class SettingView extends GetView<SettingController> {
 
   FutureBuilder<User> _body() {
     return FutureBuilder<User>(
-      future: userController.getUser("1"),
+      future: userController.getUser(_authManager.getToken()!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(

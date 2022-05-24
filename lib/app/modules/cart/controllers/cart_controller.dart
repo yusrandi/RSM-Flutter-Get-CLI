@@ -90,10 +90,10 @@ class CartController extends GetxController {
     qtys = qtyss;
   }
 
-  Future<String> transaksiStore(
-      String amount, String cabang_produk_ids, String qtys) async {
+  Future<String> transaksiStore(String amount, String cabang_produk_ids,
+      String qtys, String userId) async {
     var _response = await http.post(Uri.parse(Api().sale), body: {
-      "user_id": "1",
+      "user_id": userId,
       "amount": amount,
       "qtys": qtys,
       "cabang_produk_ids": cabang_produk_ids,

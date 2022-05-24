@@ -5,14 +5,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_widgets.dart/item_product.dart';
+import 'package:rsm_flutter_get_cli/app/data/models/kategori_model.dart';
 
 import '../../../cores/loaders/item_product_skeleton.dart';
 import '../../../data/models/cabang-product.dart';
 import '../controllers/menu_controller.dart';
 
 class MenuView extends GetView<MenuController> {
-  // final MenuController cartController = Get.find();
-  MenuController c = Get.put(MenuController());
+  final MenuController c = Get.put(MenuController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +65,62 @@ class MenuView extends GetView<MenuController> {
                 ],
               ),
             ),
+            SizedBox(height: 16),
+            FutureBuilder<List<KategoriModel>>(
+                future: c.getAllKategoris(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  print(snapshot.data);
+                  if (snapshot.data!.isEmpty) {
+                    return Container(
+                      child: Center(
+                        child: Text('Produk Belum Tersedia'),
+                      ),
+                    );
+                  }
+                  return Container(
+                    height: 40,
+                    child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          KategoriModel kategoriModel = snapshot.data![index];
+                          return Obx(
+                            () {
+                              return GestureDetector(
+                                onTap: () {
+                                  c.count.value = index;
+                                  c.runFilterKategori(kategoriModel.id!);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 8),
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: c.count.value == index
+                                          ? Colors.red
+                                          : Colors.white),
+                                  child: Center(
+                                    child: Text(
+                                      '${kategoriModel.name}',
+                                      style: TextStyle(
+                                          color: c.count.value == index
+                                              ? Colors.white
+                                              : Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }),
+                  );
+                }),
             const SizedBox(height: 20),
             Container(
                 child: Obx(
@@ -74,9 +130,8 @@ class MenuView extends GetView<MenuController> {
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
                 // This creates two columns with two items in each column
-                children:
-                    List.generate(controller.dataList.value.length, (index) {
-                  CabangProduct cb = controller.dataList.value[index];
+                children: List.generate(controller.dataList.length, (index) {
+                  CabangProduct cb = controller.dataList[index];
                   return ItemProduct(cb: cb);
                 }),
               ),

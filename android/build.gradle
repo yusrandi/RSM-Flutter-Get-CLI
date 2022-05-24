@@ -10,6 +10,9 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+ext {
+    flutterFFmpegPackage  = "<flutter ffmpeg package name listed in section 2.1>"
+}
 
 allprojects {
     repositories {

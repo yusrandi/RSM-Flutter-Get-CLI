@@ -5,17 +5,20 @@ import 'package:rsm_flutter_get_cli/app/modules/menu/controllers/menu_controller
 
 import '../../../data/models/cabang-product.dart';
 import '../../../routes/app_pages.dart';
+import '../../auth/controllers/authentication_manager.dart';
 
 class BarcodeController extends GetxController {
   MenuController _menuController = Get.put(MenuController());
 
   final count = 0.obs;
   Rx<List<CabangProduct>> dataList = Rx<List<CabangProduct>>([]);
+  final AuthenticationManager _authManager = Get.find();
 
   @override
   void onInit() async {
     super.onInit();
-    dataList.value = await _menuController.getAllProductById(1);
+    dataList.value =
+        await _menuController.getAllProductById(_authManager.getToken()!);
     print("BarcodeController, ${dataList.value}");
   }
 

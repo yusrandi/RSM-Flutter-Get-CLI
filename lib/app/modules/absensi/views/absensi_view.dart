@@ -21,7 +21,7 @@ class AbsensiView extends GetView<AbsensiController> {
   Center takeReady() {
     return Center(
       child: GestureDetector(
-        onTap: () => c.setCount(1),
+        onTap: () => Get.toNamed(Routes.CAMERA),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

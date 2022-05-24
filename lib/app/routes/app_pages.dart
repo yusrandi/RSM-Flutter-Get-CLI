@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rsm_flutter_get_cli/app/modules/absensi/views/camera_page.dart';
 
 import '../modules/absensi/bindings/absensi_binding.dart';
 import '../modules/absensi/views/absensi_view.dart';
@@ -73,6 +74,11 @@ class AppPages {
     GetPage(
       name: _Paths.DISPLAY,
       page: () => DisplayPicture(),
+      binding: AbsensiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CAMERA,
+      page: () => CameraPage(),
       binding: AbsensiBinding(),
     ),
     GetPage(
