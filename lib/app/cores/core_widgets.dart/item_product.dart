@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
 import '../../data/config/api.dart';
 import '../../data/models/cabang-product.dart';
@@ -16,6 +17,7 @@ class ItemProduct extends StatelessWidget {
     return GestureDetector(
       onTap: (() => Get.toNamed(Routes.DETAIL, arguments: cb)),
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8),
         width: size.width * 0.4,
         height: 290,
         decoration: BoxDecoration(
@@ -41,10 +43,7 @@ class ItemProduct extends StatelessWidget {
                 children: [
                   Text('${cb.product!.productName!}',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: CoreColor.kTextColor)),
+                      style: CoreStyles.uSubTitle),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -52,10 +51,11 @@ class ItemProduct extends StatelessWidget {
                         "Rp. " +
                             NumberFormat("#,##0", "en_US")
                                 .format(int.parse(cb.harga.toString())),
-                        style: TextStyle(color: Colors.black),
+                        style: CoreStyles.uHeading3,
                       ),
                       Text('${cb.qty.toString()} ${cb.product!.unit!.name!}',
-                          style: TextStyle(color: CoreColor.primary))
+                          style: CoreStyles.uHeading3
+                              .copyWith(color: CoreColor.primary))
                     ],
                   ),
                 ],

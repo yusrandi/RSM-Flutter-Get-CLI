@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/data/models/cart.dart';
 import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/authentication_manager.dart';
 
@@ -67,15 +68,13 @@ class CartView extends GetView<CartController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Total',
-                              style: TextStyle(
-                                  fontSize: 16, color: CoreColor.kTextColor)),
+                          Text('Total', style: CoreStyles.uHeading3),
                           GetBuilder<CartController>(builder: (controller) {
                             return Text(
                               "Rp. " +
                                   NumberFormat("#,##0", "en_US")
                                       .format(controller.count2),
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: CoreStyles.uSubTitle,
                             );
                           }),
                         ],
@@ -93,12 +92,13 @@ class CartView extends GetView<CartController> {
                         width: 150,
                         decoration: BoxDecoration(
                           gradient: CoreColor.bottomShadow,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         child: Center(
                           child: Text(
                             'Checkout',
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            style: CoreStyles.uSubTitle
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                       ),

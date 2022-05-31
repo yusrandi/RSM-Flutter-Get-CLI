@@ -42,14 +42,17 @@ class AuthView extends GetView<AuthController> {
       body: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Lottie.asset(CoreImages.motorJson, height: 200),
+                  child: Image.asset(
+                    CoreImages.rsmPutih,
+                    height: 150,
+                  ),
                 ),
               ],
             ),
@@ -76,16 +79,12 @@ class AuthView extends GetView<AuthController> {
                       children: [
                         Text(
                           "Welcome Back",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: (28),
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: CoreStyles.uTitle,
                         ),
-                        const Text(
+                        Text(
                           "Sign in with your Phone and password  \nto continue",
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey),
+                          style: CoreStyles.uSubTitle,
                         ),
                         SizedBox(height: (26)),
                         emailField(),
@@ -106,10 +105,10 @@ class AuthView extends GetView<AuthController> {
                             }
                           },
                           child: Container(
-                            height: 60,
+                            height: 50,
                             decoration: BoxDecoration(
                                 color: CoreColor.primary,
-                                borderRadius: BorderRadius.circular(20)),
+                                borderRadius: BorderRadius.circular(8)),
                             child: Center(
                                 child: Obx(
                               () =>
@@ -117,7 +116,7 @@ class AuthView extends GetView<AuthController> {
                                       ? loading()
                                       : Text(
                                           "Login",
-                                          style: CoreStyles.uTitle
+                                          style: CoreStyles.uSubTitle
                                               .copyWith(color: Colors.white),
                                         ),
                             )),
@@ -147,13 +146,13 @@ class AuthView extends GetView<AuthController> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Phone',
-        labelStyle: const TextStyle(color: Colors.black),
+        labelStyle: CoreStyles.uSubTitle.copyWith(color: Colors.black),
 
         hintText: 'Enter your phone number',
         // Here is key idea
 
         prefixIcon:
-            Icon(Icons.alternate_email_rounded, color: CoreColor.primary),
+            Icon(Icons.phone_android_outlined, color: CoreColor.primary),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: CoreColor.primary, width: 1),
@@ -186,7 +185,7 @@ class AuthView extends GetView<AuthController> {
               .passwordVisible.value, //This will obscure text dynamically
           decoration: InputDecoration(
             labelText: 'Password',
-            labelStyle: const TextStyle(color: Colors.black),
+            labelStyle: CoreStyles.uSubTitle.copyWith(color: Colors.black),
 
             hintText: 'Enter your password',
             // Here is key idea

@@ -18,7 +18,8 @@ class DisplayPicture extends GetView<AbsensiController> {
 
   @override
   Widget build(BuildContext context) {
-    XFile image = Get.arguments;
+    XFile image = Get.arguments[0];
+
     c.status.value = Status.none;
 
     var size = MediaQuery.of(context).size;

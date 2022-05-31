@@ -58,7 +58,8 @@ class _CameraPageState extends State<CameraPage> {
                         final image = await _cameraController.takePicture();
                         print(image.path);
 
-                        await Get.toNamed(Routes.DISPLAY, arguments: image);
+                        await Get.offAndToNamed(Routes.DISPLAY,
+                            arguments: [image, _cameraController]);
                       } catch (e) {
                         // If an error occurs, log the error to the console.
                         print(e);

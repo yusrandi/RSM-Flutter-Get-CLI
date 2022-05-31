@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/auth_controller.dart';
 import 'package:rsm_flutter_get_cli/app/modules/home/views/home_view.dart';
 import 'package:rsm_flutter_get_cli/app/modules/home/views/onboard.dart';
@@ -51,33 +52,24 @@ class SplashView extends GetView<SplashController> {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 16),
           padding: EdgeInsets.all(16),
           width: double.infinity,
           height: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Lottie.asset(CoreImages.motorJson,
-                    height: MediaQuery.of(context).size.height / 2),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(CoreImages.background),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Lottie.asset(
+                CoreImages.motorJson,
+                height: 150,
               ),
-              Text(
-                "${CoreStrings.appName}",
-                style: TextStyle(
-                    color: CoreColor.primary,
-                    fontSize: 56,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text("${CoreStrings.welcomeTitle}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: CoreColor.primarySoft,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(height: 16),
-            ],
+            ),
           ),
         ),
       ],

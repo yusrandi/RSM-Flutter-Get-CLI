@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 import 'package:get/get.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/data/config/api.dart';
 import 'package:rsm_flutter_get_cli/app/data/models/cabang-product.dart';
 import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
@@ -62,15 +63,9 @@ class DetailView extends GetView<DetailController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(data.product!.productName!,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
+                                style: CoreStyles.uSubTitle),
                             Text(data.product!.productBarcode!,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: CoreColor.kTextColor)),
+                                style: CoreStyles.uHeading3),
                           ],
                         ),
                         Column(
@@ -80,16 +75,11 @@ class DetailView extends GetView<DetailController> {
                                 "Rp. " +
                                     NumberFormat("#,##0", "en_US").format(
                                         int.parse(data.harga.toString())),
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red)),
+                                style: CoreStyles.uHeading3
+                                    .copyWith(color: CoreColor.primary)),
                             Text(
                                 '${data.qty.toString()} ${data.product!.unit!.name!}',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: CoreColor.kTextColor)),
+                                style: CoreStyles.uHeading3),
                           ],
                         ),
                       ],
@@ -98,14 +88,12 @@ class DetailView extends GetView<DetailController> {
                     Text('Produk Merk',
                         style: TextStyle(fontSize: 14, color: Colors.black)),
                     Text(data.product!.productMerk!,
-                        style: TextStyle(
-                            fontSize: 20, color: CoreColor.kTextColor)),
+                        style: CoreStyles.uSubTitle),
                     SizedBox(height: 16),
                     Text('Produk Material',
                         style: TextStyle(fontSize: 14, color: Colors.black)),
                     Text(data.product!.productMaterial!,
-                        style: TextStyle(
-                            fontSize: 20, color: CoreColor.kTextColor)),
+                        style: CoreStyles.uSubTitle),
                     SizedBox(height: 50)
                   ],
                 ),
@@ -156,10 +144,8 @@ class DetailView extends GetView<DetailController> {
                                 SizedBox(width: 16),
                                 Center(
                                     child: Text('CheckOut',
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white))),
+                                        style: CoreStyles.uSubTitle
+                                            .copyWith(color: Colors.white))),
                               ],
                             ),
                           ),

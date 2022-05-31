@@ -17,18 +17,13 @@ class MenuView extends GetView<MenuController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Text("List Produk",
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                    color: CoreColor.kTextColor)),
-            SizedBox(height: 16),
+            SizedBox(height: 40),
             Container(
               height: 50,
+              margin: EdgeInsets.symmetric(horizontal: 8),
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               decoration: BoxDecoration(
                   color: CoreColor.primary.withOpacity(0.1),
@@ -47,7 +42,7 @@ class MenuView extends GetView<MenuController> {
                             border: InputBorder.none,
                             hintText: "Nama atau Kode",
                             labelStyle: const TextStyle(
-                                color: Colors.white, fontSize: 20)),
+                                color: Colors.white, fontSize: 16)),
                       ),
                     ),
                   ),
@@ -99,7 +94,7 @@ class MenuView extends GetView<MenuController> {
                                 },
                                 child: Container(
                                   margin: EdgeInsets.only(left: 8),
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       color: c.count.value == index

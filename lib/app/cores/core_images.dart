@@ -5,4 +5,8 @@ class CoreImages {
   static String faceScanningJson = "assets/lotties/face-scanning.json";
   static String motorJson = "assets/lotties/motor.json";
   static String coffee = "assets/images/coffee.jpg";
+  static String background = "assets/images/background.jpg";
+  static String rsmKuning = "assets/images/rsmkuning.png";
+  static String rsmMerah = "assets/images/rsm-merah.png";
+  static String rsmPutih = "assets/images/rsm-putih.png";
 }

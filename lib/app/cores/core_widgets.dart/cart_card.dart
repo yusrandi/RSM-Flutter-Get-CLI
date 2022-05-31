@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 
 import '../../data/config/api.dart';
 import '../../data/models/cart.dart';
@@ -29,7 +30,7 @@ class CartCArd extends StatelessWidget {
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       child: Row(
         // crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +45,7 @@ class CartCArd extends StatelessWidget {
                   image: NetworkImage(Api.imageURL +
                       '/' +
                       product.cabangProduct!.product!.productImage!)),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
           ),
           SizedBox(width: 8),
@@ -55,11 +56,11 @@ class CartCArd extends StatelessWidget {
               children: [
                 Text(
                   product.cabangProduct!.product!.productName!,
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: CoreStyles.uSubTitle,
                 ),
                 Text(
                   product.cabangProduct!.product!.productBarcode!,
-                  style: TextStyle(color: CoreColor.kTextColor, fontSize: 12),
+                  style: CoreStyles.uHeading3,
                 ),
               ],
             ),
@@ -74,7 +75,7 @@ class CartCArd extends StatelessWidget {
                   "Rp. " +
                       NumberFormat("#,##0", "en_US").format(
                           int.parse(product.cabangProduct!.harga!.toString())),
-                  style: TextStyle(fontSize: 16, color: CoreColor.kTextColor),
+                  style: CoreStyles.uHeading3,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

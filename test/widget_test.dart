@@ -8,12 +8,14 @@ import 'package:rsm_flutter_get_cli/app/data/services/dashboard_services.dart';
 void main() async {
   print('halooo');
 
-  // var store = transaksiStore("2000", "1,2", "2,2");
-  // print(store.toString());
+  var _response = await http.post(Uri.parse(Api().loginUser), body: {
+    "phone": "000",
+    "password": "87654321",
+  });
 
-  var _response = await DashboardService().fetchDashboardReport(1);
+  var data = json.decode(_response.body);
 
-  print(_response);
+  print(data['responsecode']);
 }
 
 Future<String> transaksiStore(

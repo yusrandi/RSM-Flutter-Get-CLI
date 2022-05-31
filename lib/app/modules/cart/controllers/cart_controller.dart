@@ -68,9 +68,15 @@ class CartController extends GetxController {
 
   void increasQty(Cart cart) {
     if (cart.qty >= 1) {
-      cart.toggleDone();
-      getTotalsMount();
-      update();
+      if (cart.qty < int.parse(cart.cabangProduct!.qty!)) {
+        cart.toggleDone();
+        getTotalsMount();
+        update();
+      } else {
+        Get.snackbar("RSM", "Maaf, stok tidak mencukupi",
+            backgroundColor: CoreColor.whiteSoft,
+            duration: Duration(seconds: 1));
+      }
     }
   }
 

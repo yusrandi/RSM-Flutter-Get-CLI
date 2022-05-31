@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_images.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_widgets.dart/item_product.dart';
 import 'package:rsm_flutter_get_cli/app/data/models/dashboard_model.dart';
@@ -38,116 +39,129 @@ class DashboardView extends GetView<DashboardController> {
 
   layout2(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FutureBuilder<User>(
-                future: userController.getUser(_authManager.getToken()!),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("...",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: CoreColor.kTextColor));
-                  }
-                  User u = snapshot.data!;
-                  print(snapshot.data);
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FutureBuilder<User>(
+                  future: userController.getUser(_authManager.getToken()!),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("...",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: CoreColor.kTextColor));
+                    }
+                    User u = snapshot.data!;
+                    print(snapshot.data);
 
-                  return RichText(
-                    text: TextSpan(
-                      text: 'Hello',
-                      style: CoreStyles.uTitle,
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: u.name,
-                            style: CoreStyles.uTitle.copyWith(fontSize: 12)),
+                    return Row(
+                      children: [
+                        Image.asset(
+                          CoreImages.rsmMerah,
+                          height: 40,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: 'Hello',
+                            style: CoreStyles.uTitle,
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: u.name,
+                                  style:
+                                      CoreStyles.uTitle.copyWith(fontSize: 12)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                GestureDetector(
+                  onTap: (() => Get.toNamed(Routes.CART)),
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    child: Stack(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/cart.svg",
+                          color: Colors.red,
+                          height: 50,
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            width: 20.0,
+                            height: 20.0,
+                            decoration: new BoxDecoration(
+                              color: CoreColor.primary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                                child: Obx(() => Text(
+                                      cartController.cartItems.length
+                                          .toString(),
+                                      style: TextStyle(color: Colors.white),
+                                    ))),
+                          ),
+                        )
                       ],
                     ),
-                  );
-                },
-              ),
-              GestureDetector(
-                onTap: (() => Get.toNamed(Routes.CART)),
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  child: Stack(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/cart.svg",
-                        color: Colors.red,
-                        height: 50,
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: 20.0,
-                          height: 20.0,
-                          decoration: new BoxDecoration(
-                            color: CoreColor.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                              child: Obx(() => Text(
-                                    cartController.cartItems.length.toString(),
-                                    style: TextStyle(color: Colors.white),
-                                  ))),
-                        ),
-                      )
-                    ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(height: 16),
-          FutureBuilder<DashboardModel>(
-              future: c.fetchReport(_authManager.getToken()!),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                print(snapshot.data);
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: FutureBuilder<DashboardModel>(
+                future: c.fetchReport(_authManager.getToken()!),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  print(snapshot.data);
 
-                DashboardModel model = snapshot.data!;
+                  DashboardModel model = snapshot.data!;
 
-                return Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white),
-                  child: IntrinsicHeight(
-                      child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          userKinerja(model),
-                          SizedBox(height: 8),
-                          userQty(model),
-                        ],
-                      ),
-                      VerticalDivider(),
-                      cabangTotal(model),
-                    ],
-                  )),
-                );
-              }),
+                  return Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white),
+                    child: IntrinsicHeight(
+                        child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            userKinerja(model),
+                            SizedBox(height: 8),
+                            userQty(model),
+                          ],
+                        ),
+                        VerticalDivider(),
+                        cabangTotal(model),
+                      ],
+                    )),
+                  );
+                }),
+          ),
           SizedBox(height: 16),
-          SizedBox(height: 16),
-          Text("List Produk Terlaku",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Nunito',
-                  color: Colors.black)),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text("List Produk Terlaku",
+                style: CoreStyles.uSubTitle.copyWith(color: Colors.black)),
+          ),
           Container(
             margin: EdgeInsets.only(top: 8),
             child: FutureBuilder<List<CabangProduct>>(
@@ -167,7 +181,7 @@ class DashboardView extends GetView<DashboardController> {
                   }
                   return Container(
                     height: 280,
-                    child: ListView.separated(
+                    child: ListView.builder(
                       // crossAxisCount is the number of columns
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
@@ -176,21 +190,16 @@ class DashboardView extends GetView<DashboardController> {
                         CabangProduct cb = snapshot.data![index];
                         return ItemProduct(cb: cb);
                       },
-                      separatorBuilder: (context, index) => SizedBox(
-                        width: 10,
-                      ),
                     ),
                   );
                 }),
           ),
           SizedBox(height: 16),
-          SizedBox(height: 16),
-          Text("List Semua Produk",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Nunito',
-                  color: Colors.black)),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text("List Semua Produk",
+                style: CoreStyles.uSubTitle.copyWith(color: Colors.black)),
+          ),
           Container(
               margin: EdgeInsets.only(top: 8),
               child: FutureBuilder<List<CabangProduct>>(
@@ -220,30 +229,6 @@ class DashboardView extends GetView<DashboardController> {
                       }),
                     );
                   })),
-          Container(
-              margin: EdgeInsets.only(top: 8),
-              child: FutureBuilder<List<CabangProduct>>(
-                  future: c.getAllProductById(1),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                          child: CircularProgressIndicator(
-                              color: CoreColor.primary));
-                    }
-
-                    print(snapshot.data);
-                    return StaggeredGrid.count(
-                      // crossAxisCount is the number of columns
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      // This creates two columns with two items in each column
-                      children: List.generate(snapshot.data!.length, (index) {
-                        CabangProduct cb = snapshot.data![index];
-                        return ItemProduct(cb: cb);
-                      }),
-                    );
-                  })),
           SizedBox(height: 50),
         ],
       ),
@@ -253,7 +238,9 @@ class DashboardView extends GetView<DashboardController> {
   RichText cabangTotal(DashboardModel model) {
     return RichText(
       text: TextSpan(
-        text: formatCurrency.format(model.cabangTotal),
+        text: "Rp. " +
+            NumberFormat("#,##0", "en_US")
+                .format(int.parse(model.cabangTotal!.toString())),
         style:
             CoreStyles.uTitle.copyWith(fontSize: 16, color: CoreColor.primary),
         children: <TextSpan>[
@@ -284,7 +271,9 @@ class DashboardView extends GetView<DashboardController> {
   RichText userKinerja(DashboardModel model) {
     return RichText(
       text: TextSpan(
-        text: formatCurrency.format(model.userTotal),
+        text: "Rp. " +
+            NumberFormat("#,##0", "en_US")
+                .format(int.parse(model.userTotal!.toString())),
         style: CoreStyles.uTitle.copyWith(fontSize: 16),
         children: <TextSpan>[
           TextSpan(
