@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 
 import '../../../cores/core_constants.dart';

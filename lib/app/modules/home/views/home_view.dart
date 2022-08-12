@@ -3,8 +3,6 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:rsm_flutter_get_cli/app/modules/absensi/views/absensi_view.dart';
-import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/auth_controller.dart';
-import 'package:rsm_flutter_get_cli/app/modules/auth/views/auth_view.dart';
 import 'package:rsm_flutter_get_cli/app/modules/barcode/views/barcode_view.dart';
 import 'package:rsm_flutter_get_cli/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:rsm_flutter_get_cli/app/modules/menu/views/menu_view.dart';
@@ -15,8 +13,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final tabs = ['Home', 'Profile', 'Help', 'Settings'];
-  HomeController c = Get.put(HomeController());
-  AuthController _authManager = Get.find();
+  final HomeController c = Get.put(HomeController());
 
   int selectedPosition = 0;
 

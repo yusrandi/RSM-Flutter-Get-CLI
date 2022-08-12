@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -11,7 +10,7 @@ import '../../../routes/app_pages.dart';
 import '../controllers/absensi_controller.dart';
 
 class AbsensiView extends GetView<AbsensiController> {
-  AbsensiController c = Get.put(AbsensiController());
+  final AbsensiController c = Get.put(AbsensiController());
 
   @override
   Widget build(BuildContext context) {

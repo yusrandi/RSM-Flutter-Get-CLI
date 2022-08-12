@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:camera/camera.dart';
@@ -12,7 +11,7 @@ import '../../../cores/core_colors.dart';
 import '../controllers/absensi_controller.dart';
 
 class DisplayPicture extends GetView<AbsensiController> {
-  AbsensiController c = Get.find();
+  final AbsensiController c = Get.find();
   final _resKeterangan = new TextEditingController();
   final AuthenticationManager authenticationManager = Get.find();
 
@@ -171,7 +170,7 @@ class DisplayPicture extends GetView<AbsensiController> {
     }
 
     if (response.isTapConfirmButton) {
-      String keterangan = _resKeterangan.text.trim();
+      // String keterangan = _resKeterangan.text.trim();
     }
   }
 }

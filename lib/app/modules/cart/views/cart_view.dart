@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
-import 'package:rsm_flutter_get_cli/app/data/models/cart.dart';
 import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/authentication_manager.dart';
 
 import '../../../cores/core_widgets.dart/cart_card.dart';

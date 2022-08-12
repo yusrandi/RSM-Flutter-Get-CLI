@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/data/config/api.dart';
 import 'package:rsm_flutter_get_cli/app/data/models/user.dart';
-import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/auth_controller.dart';
 
 import '../../../cores/core_colors.dart';
 import '../../auth/controllers/authentication_manager.dart';
@@ -12,7 +11,7 @@ import '../controllers/setting_controller.dart';
 
 class SettingView extends GetView<SettingController> {
   final userController = Get.put(SettingController());
-  AuthenticationManager _authManager = Get.find();
+  final AuthenticationManager _authManager = Get.find();
 
   @override
   Widget build(BuildContext context) {

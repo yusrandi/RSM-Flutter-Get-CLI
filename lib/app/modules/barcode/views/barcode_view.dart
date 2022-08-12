@@ -11,7 +11,7 @@ import '../controllers/barcode_controller.dart';
 
 class BarcodeView extends GetView<BarcodeController> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  BarcodeController _barcodeController = Get.put(BarcodeController());
+  final BarcodeController _barcodeController = Get.put(BarcodeController());
 
   @override
   Widget build(BuildContext context) {

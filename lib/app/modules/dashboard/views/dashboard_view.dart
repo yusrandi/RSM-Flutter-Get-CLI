@@ -20,9 +20,9 @@ import '../../setting/controllers/setting_controller.dart';
 import '../controllers/dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
-  DashboardController c = Get.put(DashboardController());
+  final DashboardController c = Get.put(DashboardController());
   // final CarouselController _controller = CarouselController();
-  var containerRadius = const Radius.circular(30.0);
+  final containerRadius = const Radius.circular(30.0);
   final cartController = Get.put(CartController());
   final userController = Get.put(SettingController());
 

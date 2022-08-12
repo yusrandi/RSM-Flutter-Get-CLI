@@ -3,7 +3,6 @@ import 'package:rsm_flutter_get_cli/app/data/config/api.dart';
 import 'dart:convert';
 
 import 'package:rsm_flutter_get_cli/app/data/models/user.dart';
-import 'package:rsm_flutter_get_cli/app/data/services/dashboard_services.dart';
 
 void main() async {
   print('halooo');

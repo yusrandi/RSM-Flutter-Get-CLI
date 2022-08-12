@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
-
 import '../../../cores/core_colors.dart';
 import '../../../data/config/api.dart';
 import '../../../data/models/user.dart';
