@@ -9,6 +9,7 @@ import '../../../data/models/cabang-product.dart';
 import '../../../data/models/cart.dart';
 
 class CartController extends GetxController {
+  RxString payment = "Cash".obs;
   static CartController instance = Get.find();
   final cart = Cart().obs;
 
@@ -101,6 +102,7 @@ class CartController extends GetxController {
     var _response = await http.post(Uri.parse(Api().sale), body: {
       "user_id": userId,
       "amount": amount,
+      "payment": payment.value,
       "qtys": qtys,
       "cabang_produk_ids": cabang_produk_ids,
     });

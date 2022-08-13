@@ -77,6 +77,7 @@ class MenuView extends GetView<MenuController> {
                       ),
                     );
                   }
+
                   return Container(
                     height: 40,
                     child: ListView.builder(

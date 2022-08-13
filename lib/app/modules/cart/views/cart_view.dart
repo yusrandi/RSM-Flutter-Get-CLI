@@ -24,84 +24,151 @@ class CartView extends GetView<CartController> {
         bottomOpacity: 0.0,
         elevation: 0.0,
       ),
-      body: Stack(
+      body: Column(
         children: [
-          ListView(
-            children: [
-              GetX<CartController>(builder: (controller) {
-                return Column(
-                    children: cartController.cartItems
-                        .map((e) => Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: CartCArd(
-                              function1: () {
-                                cartController.increasQty(e);
-                              },
-                              function2: () {
-                                cartController.decreasqty(cart: e);
-                              },
-                              product: e,
-                            )))
-                        .toList());
-              }),
-              SizedBox(
-                height: 50,
-              ),
-            ],
+          Expanded(
+            child: ListView(
+              children: [
+                GetX<CartController>(builder: (controller) {
+                  return Column(
+                      children: cartController.cartItems
+                          .map((e) => Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: CartCArd(
+                                function1: () {
+                                  cartController.increasQty(e);
+                                },
+                                function2: () {
+                                  cartController.decreasqty(cart: e);
+                                },
+                                product: e,
+                              )))
+                          .toList());
+                }),
+                SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
           ),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.all(16),
-                padding: EdgeInsets.only(top: 5),
-                color: CoreColor.greyColor2,
-                width: double.infinity,
-                height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Total', style: CoreStyles.uHeading3),
-                          GetBuilder<CartController>(builder: (controller) {
-                            return Text(
-                              "Rp. " +
-                                  NumberFormat("#,##0", "en_US")
-                                      .format(controller.count2),
-                              style: CoreStyles.uSubTitle,
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 30),
-                    GestureDetector(
-                      onTap: () {
-                        if (controller.cartItems.isNotEmpty) {
-                          alertConfirm(context);
-                        }
-                        // EasyLoading.show(status: 'loading...');
-                      },
-                      child: Container(
-                        width: 150,
-                        decoration: BoxDecoration(
-                          gradient: CoreColor.bottomShadow,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Checkout',
-                            style: CoreStyles.uSubTitle
-                                .copyWith(color: Colors.white),
+          Container(
+            height: 150,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(
+                      child: Obx(
+                    () => Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: GestureDetector(
+                            onTap: () => cartController.payment.value = "Cash",
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: cartController.payment.value == "Cash"
+                                      ? CoreColor.primary
+                                      : Colors.white),
+                              child: Center(
+                                child: Text(
+                                  "Cash",
+                                  style: CoreStyles.uSubTitle.copyWith(
+                                      color:
+                                          cartController.payment.value != "Cash"
+                                              ? CoreColor.primary
+                                              : Colors.white),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                        SizedBox(width: 16),
+                        Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () =>
+                                  cartController.payment.value = "Credit",
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color:
+                                        cartController.payment.value == "Credit"
+                                            ? CoreColor.primary
+                                            : Colors.white),
+                                child: Center(
+                                  child: Text(
+                                    "Utang",
+                                    style: CoreStyles.uSubTitle.copyWith(
+                                        color: cartController.payment.value !=
+                                                "Credit"
+                                            ? CoreColor.primary
+                                            : Colors.white),
+                                  ),
+                                ),
+                              ),
+                            )),
+                      ],
+                    ),
+                  )),
                 ),
-              )),
+                Container(
+                  margin: EdgeInsets.all(16),
+                  padding: EdgeInsets.only(top: 5),
+                  color: CoreColor.greyColor2,
+                  width: double.infinity,
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Total', style: CoreStyles.uHeading3),
+                            GetBuilder<CartController>(builder: (controller) {
+                              return Text(
+                                "Rp. " +
+                                    NumberFormat("#,##0", "en_US")
+                                        .format(controller.count2),
+                                style: CoreStyles.uSubTitle,
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 30),
+                      GestureDetector(
+                        onTap: () {
+                          if (controller.cartItems.isNotEmpty) {
+                            alertConfirm(context);
+                          }
+                          // EasyLoading.show(status: 'loading...');
+                        },
+                        child: Container(
+                          width: 150,
+                          decoration: BoxDecoration(
+                            gradient: CoreColor.bottomShadow,
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Checkout',
+                              style: CoreStyles.uSubTitle
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
