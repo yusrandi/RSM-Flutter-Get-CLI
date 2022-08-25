@@ -235,21 +235,43 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  RichText cabangTotal(DashboardModel model) {
-    return RichText(
-      text: TextSpan(
-        text: "Rp. " +
-            NumberFormat("#,##0", "en_US")
-                .format(int.parse(model.cabangTotal!.toString())),
-        style:
-            CoreStyles.uTitle.copyWith(fontSize: 16, color: CoreColor.primary),
-        children: <TextSpan>[
-          TextSpan(
-              text: '\nTotal Penjualan Cabang',
-              style: CoreStyles.uTitle
-                  .copyWith(fontSize: 10, color: CoreColor.kTextColor)),
-        ],
-      ),
+  cabangTotal(DashboardModel model) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+          text: TextSpan(
+            text: "Rp. " +
+                NumberFormat("#,##0", "en_US")
+                    .format(int.parse(model.cabangTotal!.toString())),
+            style: CoreStyles.uTitle
+                .copyWith(fontSize: 16, color: CoreColor.primary),
+            children: <TextSpan>[
+              TextSpan(
+                  text: '\nPenjualan Hari Ini',
+                  style: CoreStyles.uTitle
+                      .copyWith(fontSize: 10, color: CoreColor.kTextColor)),
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        RichText(
+          text: TextSpan(
+            text: "Rp. " +
+                NumberFormat("#,##0", "en_US")
+                    .format(int.parse(model.profit!.toString())),
+            style:
+                CoreStyles.uTitle.copyWith(fontSize: 16, color: Colors.green),
+            children: <TextSpan>[
+              TextSpan(
+                  text: '\nProfit Hari Ini',
+                  style: CoreStyles.uTitle
+                      .copyWith(fontSize: 10, color: CoreColor.kTextColor)),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
