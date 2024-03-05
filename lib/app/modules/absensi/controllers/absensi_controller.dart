@@ -46,6 +46,7 @@ class AbsensiController extends GetxController {
 
   @override
   void onClose() {
+    cameraController.dispose();
     print("on close");
   }
 

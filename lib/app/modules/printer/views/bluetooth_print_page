@@ -1,0 +1,369 @@
+import 'dart:convert';
+
+import 'package:bluetooth_print/bluetooth_print.dart';
+import 'package:bluetooth_print/bluetooth_print_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
+import 'package:rsm_flutter_get_cli/app/cores/core_images.dart';
+
+import '../../../data/models/cart.dart';
+import '../../cart/controllers/cart_controller.dart';
+
+class BluetoothPrinterPage extends StatefulWidget {
+  const BluetoothPrinterPage({Key? key}) : super(key: key);
+
+  @override
+  State<BluetoothPrinterPage> createState() => _BluetoothPrinterPageState();
+}
+
+class _BluetoothPrinterPageState extends State<BluetoothPrinterPage> {
+  BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
+
+  bool _connected = false;
+  BluetoothDevice? _device;
+  String tips = 'no device connect';
+
+  final CartController cartController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => initBluetooth());
+  }
+
+// Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initBluetooth() async {
+    bluetoothPrint.startScan(timeout: Duration(seconds: 4));
+
+    bool isConnected = await bluetoothPrint.isConnected ?? false;
+
+    bluetoothPrint.state.listen((state) {
+      print('******************* cur device status: $state');
+
+      switch (state) {
+        case BluetoothPrint.CONNECTED:
+          setState(() {
+            _connected = true;
+            tips = 'Connected';
+          });
+          break;
+        case BluetoothPrint.DISCONNECTED:
+          setState(() {
+            _connected = false;
+            tips = 'Disconnected';
+          });
+          break;
+        default:
+          break;
+      }
+    });
+
+    if (!mounted) return;
+
+    if (isConnected) {
+      setState(() {
+        _connected = true;
+        tips = 'Connected';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        width: size.width,
+        height: size.height,
+        child: Stack(
+          children: [
+            bodyPrint(size),
+            buttonCetak(context),
+            loadingWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  RefreshIndicator bodyPrint(Size size) {
+    return RefreshIndicator(
+      onRefresh: () => bluetoothPrint.startScan(timeout: Duration(seconds: 4)),
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 50),
+            Lottie.asset(
+              CoreImages.printJson,
+              height: 250,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: Text(tips),
+                ),
+              ],
+            ),
+            Divider(),
+            StreamBuilder<List<BluetoothDevice>>(
+              stream: bluetoothPrint.scanResults,
+              initialData: [],
+              builder: (c, snapshot) => Column(
+                children: snapshot.data!
+                    .map((d) => ListTile(
+                          title: Text(d.name ?? ''),
+                          subtitle: Text(d.address ?? ''),
+                          onTap: () async {
+                            setState(() {
+                              _device = d;
+                            });
+                          },
+                          trailing:
+                              _device != null && _device!.address == d.address
+                                  ? Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                    )
+                                  : null,
+                        ))
+                    .toList(),
+              ),
+            ),
+            Divider(),
+            previewStruk(size)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column previewStruk(Size size) => Column(
+        children: [
+          Text('*******************************',
+              style: Theme.of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(color: Colors.grey.shade400)),
+          SizedBox(height: 16),
+          Image.asset(CoreImages.rsmMerah, height: 100),
+          SizedBox(height: 16),
+          Container(
+            width: size.width * 0.6,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              children: cartController.cartItems
+                  .map((e) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: Text(
+                                  e.cabangProduct!.product!.productName!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(color: Colors.grey.shade700))),
+                          Text('X ${e.qty.toString()}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(color: Colors.grey.shade700)),
+                          SizedBox(width: 8),
+                          Text(
+                              "Rp. " +
+                                  NumberFormat("#,##0", "en_US").format(
+                                      int.parse(e.cabangProduct!.product!
+                                              .productPrice!) *
+                                          e.qty),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(color: Colors.grey.shade700)),
+                        ],
+                      ))
+                  .toList(),
+            ),
+          ),
+          Container(
+            width: size.width * 0.6,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('TOTAL',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.grey.shade700)),
+                Text(
+                    "Rp. " +
+                        NumberFormat("#,##0", "en_US")
+                            .format(cartController.count2),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.grey.shade700)),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Text('*******************************',
+              style: Theme.of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(color: Colors.grey.shade400)),
+        ],
+      );
+
+  Center loadingWidget() {
+    return Center(
+      child: StreamBuilder<bool>(
+        stream: bluetoothPrint.isScanning,
+        initialData: false,
+        builder: (c, snapshot) {
+          if (snapshot.data == true) {
+            return CircularProgressIndicator(color: CoreColor.primary);
+          } else {
+            return Container();
+          }
+        },
+      ),
+    );
+  }
+
+  Positioned buttonCetak(BuildContext context) {
+    return Positioned(
+      left: 8,
+      right: 8,
+      bottom: 16,
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: _connected
+                ? () async {
+                    setState(() {
+                      tips = 'disconnecting...';
+                    });
+                    await bluetoothPrint.disconnect();
+                  }
+                : () async {
+                    if (_device != null && _device!.address != null) {
+                      setState(() {
+                        tips = 'connecting...';
+                      });
+                      await bluetoothPrint.connect(_device!);
+                    } else {
+                      setState(() {
+                        tips = 'please select device';
+                      });
+                      print('please select device');
+                    }
+                  },
+            child: Container(
+              height: 60,
+              width: 100,
+              decoration: BoxDecoration(
+                  border: Border.all(color: CoreColor.primary),
+                  borderRadius: BorderRadius.circular(16)),
+              child: Center(
+                child: _connected
+                    ? Icon(Icons.bluetooth_connected,
+                        size: 40, color: Colors.green)
+                    : Icon(Icons.bluetooth_disabled,
+                        size: 40, color: Colors.red),
+              ),
+            ),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: GestureDetector(
+              onTap: _connected
+                  ? () async {
+                      Map<String, dynamic> config = Map();
+
+                      List<LineText> list = [];
+
+                      //   list.add(LineText(
+                      //       type: LineText.TYPE_TEXT,
+                      //       content: 'Sticker Motor MX King',
+                      //       align: LineText.ALIGN_LEFT,
+                      //       linefeed: 1));
+                      //   list.add(LineText(
+                      //       type: LineText.TYPE_TEXT,
+                      //       content: 'X 3',
+                      //       x: 70,
+                      //       align: LineText.ALIGN_CENTER,
+                      //       linefeed: 0));
+                      //   list.add(LineText(
+                      //       type: LineText.TYPE_TEXT,
+                      //       content: 'Rp. 1.000.000',
+                      //       relativeX: 80,
+                      //       align: LineText.ALIGN_RIGHT,
+                      //       linefeed: 0));
+
+                      for (var i = 0;
+                          i < cartController.cartItems.length;
+                          i++) {
+                        Cart e = cartController.cartItems[i];
+                        list.add(LineText(
+                            type: LineText.TYPE_TEXT,
+                            content: e.cabangProduct!.product!.productName!,
+                            align: LineText.ALIGN_LEFT,
+                            linefeed: 1));
+
+                        // list.add(LineText(
+                        //     type: LineText.TYPE_TEXT,
+                        //     content: 'X ${e.qty}',
+                        //     relativeX: 60,
+                        //     align: LineText.ALIGN_CENTER,
+                        //     linefeed: 0));
+                        list.add(LineText(
+                            type: LineText.TYPE_TEXT,
+                            content: "X ${e.qty}  Rp. " +
+                                NumberFormat("#,##0", "en_US").format(int.parse(
+                                        e.cabangProduct!.product!
+                                            .productPrice!) *
+                                    e.qty),
+                            align: LineText.ALIGN_LEFT,
+                            linefeed: 0));
+                        list.add(LineText(linefeed: 1));
+                      }
+
+                      list.add(LineText(linefeed: 1));
+                      list.add(LineText(linefeed: 1));
+                      await bluetoothPrint.printReceipt(config, list);
+                    }
+                  : null,
+              child: Container(
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: CoreColor.primary,
+                ),
+                child: Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.print, color: Colors.white),
+                      SizedBox(width: 16),
+                      Text('Cetak Struk',
+                          style:
+                              Theme.of(context).primaryTextTheme.headlineSmall),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

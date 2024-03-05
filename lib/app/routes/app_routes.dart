@@ -17,6 +17,7 @@ abstract class Routes {
   static const CAMERA = _Paths.CAMERA;
   static const SPLASH = _Paths.SPLASH;
   static const AUTH = _Paths.AUTH;
+  static const PRINTER = _Paths.PRINTER;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const CAMERA = '/camera';
   static const SPLASH = '/splash';
   static const AUTH = '/auth';
+  static const PRINTER = '/printer';
 }

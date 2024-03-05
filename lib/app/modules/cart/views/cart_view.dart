@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_colors.dart';
 import 'package:rsm_flutter_get_cli/app/cores/core_styles.dart';
 import 'package:rsm_flutter_get_cli/app/modules/auth/controllers/authentication_manager.dart';
+import 'package:rsm_flutter_get_cli/app/routes/app_pages.dart';
 
 import '../../../cores/core_widgets.dart/cart_card.dart';
 import '../controllers/cart_controller.dart';
@@ -156,7 +157,7 @@ class CartView extends GetView<CartController> {
                           ),
                           child: Center(
                             child: Text(
-                              'Checkout',
+                              'Print',
                               style: CoreStyles.uSubTitle
                                   .copyWith(color: Colors.white),
                             ),
@@ -208,6 +209,8 @@ class CartView extends GetView<CartController> {
           cabangProductIds.join(","),
           qtys.join(","),
           _authenticationManager.getToken()!);
+
+      //   Get.toNamed(Routes.PRINTER);
       return;
     }
   }

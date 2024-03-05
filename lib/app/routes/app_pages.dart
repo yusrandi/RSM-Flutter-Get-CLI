@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:rsm_flutter_get_cli/app/modules/absensi/views/camera_page.dart';
 
 import '../modules/absensi/bindings/absensi_binding.dart';
 import '../modules/absensi/views/absensi_view.dart';
+import '../modules/absensi/views/camera_page.dart';
 import '../modules/absensi/views/display_picture.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
@@ -18,6 +18,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/menu/bindings/menu_binding.dart';
 import '../modules/menu/views/menu_view.dart';
+import '../modules/printer/bindings/printer_binding.dart';
+import '../modules/printer/views/printer_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
 import '../modules/setting/views/setting_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -90,6 +92,11 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => AuthView(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRINTER,
+      page: () => const PrinterView(),
+      binding: PrinterBinding(),
     ),
   ];
 }

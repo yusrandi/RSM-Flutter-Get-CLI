@@ -38,10 +38,12 @@ class AuthController extends GetxController with CacheManager {
       "password": password,
     });
 
+    print("url ${Api().loginUser}");
+
     status.value = Status.none;
 
+    print(_response.body);
     var data = json.decode(_response.body);
-    print(data['responsecode']);
     if (data['responsecode'] == '1') {
       User user = User.fromJson(json.decode(_response.body)['user']);
 
